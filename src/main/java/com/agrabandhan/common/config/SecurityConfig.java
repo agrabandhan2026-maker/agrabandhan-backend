@@ -34,6 +34,7 @@ public class SecurityConfig {
                 // --- Public endpoints (specific before broad) ---
                 .requestMatchers("/auth/send-otp", "/auth/verify-otp", "/auth/refresh-token").permitAll()
                 .requestMatchers("/health", "/health/**").permitAll()
+                .requestMatchers("/master-data/**").permitAll()
                 .requestMatchers("/error").permitAll()
 
                 // Swagger / OpenAPI

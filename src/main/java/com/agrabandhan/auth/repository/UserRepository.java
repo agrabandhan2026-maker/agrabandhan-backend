@@ -1,6 +1,8 @@
 package com.agrabandhan.auth.repository;
 
 import com.agrabandhan.auth.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByPhoneNumber(String phoneNumber);
 
     Optional<User> findByRefreshToken(String refreshToken);
+
+    Page<User> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
 }

@@ -1,0 +1,41 @@
+# render.yaml - Render Blueprint for AgraBandhan Backend
+# Place this in repo root. Render will auto-detect and configure the service.
+
+services:
+  - type: web
+    name: agrabandhan-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore  # Closest to India
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: PORT
+        value: "8080"
+      - key: DATABASE_URL
+        sync: false  # Set manually in Render dashboard
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true  # Auto-generate a secure secret
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_ACCESS_KEY
+        sync: false
+      - key: R2_SECRET_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        value: agrabandhan-media
+      - key: R2_PUBLIC_URL
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: SWAGGER_ENABLED
+        value: "false"
+    healthCheckPath: /api/v1/health
+    autoDeploy: true

@@ -29,6 +29,7 @@ public class InterestService {
 
     private final InterestRepository interestRepository;
     private final ProfileRepository profileRepository;
+    private final ChatService chatService;
 
     @Value("${agrabandhan.r2.public-url:}")
     private String photoBaseUrl;
@@ -109,6 +110,9 @@ public class InterestService {
         interest.setStatus(InterestStatus.ACCEPTED);
         interest.setRespondedAt(LocalDateTime.now());
         interest = interestRepository.save(interest);
+
+        // Create conversation for chat (auto-created on acceptance)
+        chatService.getOrCreateConversation(myProfile.getId(), interest.getSenderProfile().getId());
 
         log.info("Interest accepted: {} accepted by {}", interestId, myProfile.getId());
 
